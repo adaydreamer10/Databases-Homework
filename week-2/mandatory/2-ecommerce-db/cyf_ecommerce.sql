@@ -103,3 +103,60 @@ INSERT INTO order_items (order_id, product_id, quantity) VALUES(8, 5, 1);
 INSERT INTO order_items (order_id, product_id, quantity) VALUES(9, 13, 2);
 INSERT INTO order_items (order_id, product_id, quantity) VALUES(10, 14, 1);
 INSERT INTO order_items (order_id, product_id, quantity) VALUES(10, 6, 5);
+
+
+select name, address from customers where country = 'United States';
+select * from customers order by name;
+select * from products where unit_price > 100;
+select * from products where product_name ilike '%socks%';
+select * from products order by unit_price desc limit 5;
+
+select p.product_name, p.unit_price, s.supplier_name
+from products p 
+join suppliers s 
+    on s.id = p.supplier_id;
+
+select products.product_name, suppliers.supplier_name
+from products
+join suppliers
+    on products.supplier_id = suppliers.id
+where suppliers.country = 'United Kingdom';
+
+select * from orders where customer_id = 1;
+
+select *
+from orders o 
+join customers c 
+    on o.customer_id = c.id
+where c.name = 'Hope Crosby'
+
+select p.product_name, p.unit_price, oi.quantity
+from products p 
+join order_items oi 
+    on p.id = oi.product_id
+join orders o 
+    on oi.order_id = o.id
+where o.order_reference = 'ORD006';
+
+select c.name, o.order_reference, o.order_date, p.product_name, s.supplier_name, oi.quantity
+from products p
+join suppliers s
+	on s.id = p.supplier_id
+join order_items oi
+	on oi.product_id = p.id
+join orders o
+	on o.id = oi.order_id
+join customers c
+	on c.id = o.customer_id;
+
+select distinct c.name
+from customers c
+join orders o
+	on o.customer_id = c.id
+join order_items oi
+	on oi.order_id = o.id
+join products p
+	on p.id = oi.product_id
+join suppliers s
+	on s.id = p.supplier_id
+where s.country = 'China'; 
